@@ -60,7 +60,7 @@ class User extends Authenticatable
      */
     public function hasNinjaProfile()
     {
-        return is_null($this->ninjaProfile());
+        return !is_null($this->ninjaProfile);
     }
 
     /**
@@ -80,7 +80,7 @@ class User extends Authenticatable
      */
     public function hasMentorProfile()
     {
-        return is_null($this->mentorProfile());
+        return !is_null($this->mentorProfile);
     }
 
     /**
@@ -100,7 +100,7 @@ class User extends Authenticatable
      */
     public function hasParentProfile(): bool
     {
-        return is_null($this->parentProfile());
+        return !is_null($this->parentProfile);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -46,7 +47,10 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $upcomingEvents = Event::where('time_end', '>', Carbon::now())->limit(5)->with('registrations')->get();
+        $nextDojo = $upcomingEvents->pop();
+
+        return view('events.show', compact('upcomingEvents', 'nextDojo', 'event'));
     }
 
     /**
