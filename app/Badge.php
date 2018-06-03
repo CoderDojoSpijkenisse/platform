@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Represents an achievement that can be rewarded to the participants of a Dojo.
- * 
+ *
  * @package App
  */
 class Badge extends Model

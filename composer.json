@@ -10,6 +10,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
+        "squizlabs/php_codesniffer": "^3.2",
         "webpatser/laravel-uuid": "^3.0",
         "werneckbh/laravel-qr-code": "^0.1.3"
     },

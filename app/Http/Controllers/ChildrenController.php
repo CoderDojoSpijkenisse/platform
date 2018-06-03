@@ -44,15 +44,20 @@ class ChildrenController extends Controller
             }
 
             // Verify that there are enough tickets left.
-            $ticketsRemaining = $upcomingEvent->capacity - $upcomingEvent->registrations->count() + count($deleteEventRegistrationForUserIds);
+            $ticketsRemaining = $upcomingEvent->capacity -
+                ($upcomingEvent->registrations->count() + count($deleteEventRegistrationForUserIds));
+
             if ($ticketsRemaining < count($createEventRegistrationForUserIds)) {
-                return redirect()->route('parent.children')->with('error', 'There are not enough tickets left to register all your selected children!');
+                return redirect()->route('parent.children')
+                    ->with('error', 'There are not enough tickets left to register all your selected children!');
             }
 
             // Delete obsolete registrations.
-            $upcomingEvent->registrations()->whereIn('user_id', $deleteEventRegistrationForUserIds)->get()->each(function(EventRegistration $registration) {
-                $registration->delete();
-            });
+            $upcomingEvent->registrations()->whereIn('user_id', $deleteEventRegistrationForUserIds)->get()->each(
+                function (EventRegistration $registration) {
+                    $registration->delete();
+                }
+            );
 
             // Create new registrations.
             foreach ($createEventRegistrationForUserIds as $userId) {
