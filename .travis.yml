@@ -9,7 +9,7 @@ services:
 addons:
   apt:
     sources:
-      - mysql-5.7.22
+      - mysql-5.7-precise
 
 packages:
   - mysql-server
