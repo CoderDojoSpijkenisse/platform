@@ -15,7 +15,7 @@
                     @if(\Auth::user()->hasNinjaProfile())
                         <li><a class="nav-link" href="#">{{ __('My Tickets') }}</a></li>
                     @endif @if(\Auth::user()->hasMentorProfile())
-                        <li><a class="nav-link" href="#">{{ __('My Presence') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('events.index') }}">{{ __('My Presence') }}</a></li>
                     @endif @if(\Auth::user()->hasParentProfile())
                        <li><a class="nav-link" href="{{ route('parent.children') }}">{{ __('My Children') }}</a></li>
                     @endif

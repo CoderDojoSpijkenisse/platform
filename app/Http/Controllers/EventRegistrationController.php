@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\EventRegistration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventRegistrationController extends Controller
 {
@@ -35,7 +37,33 @@ class EventRegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::user()->hasMentorProfile()) {
+            if ($request->get('presence', '') === 'true') {
+                EventRegistration::create([
+                    'event_id' => Event::upcoming()->id,
+                    'user_id' => \Auth::user()->id,
+                    'parent_will_pick_up' => false,
+                    'check_in_token' => '',
+                ]);
+            } elseif ($request->get('presence', '') === 'false') {
+                $registration = EventRegistration::where('user_id', \Auth::user()->id)
+                    ->where('event_id', Event::upcoming()->id)
+                    ->first();
+
+                if (is_null($registration)) {
+                    // There was no registration yet?
+                } else {
+                    $registration->delete();
+                }
+            } else {
+                return redirect()->back()->with(
+                    'error',
+                    vsprintf('Unrecognised input: "%s"', [$request->get('presence', '')])
+                );
+            }
+
+            return redirect()->back()->with('status', 'Successfully updated presence');
+        }
     }
 
     /**

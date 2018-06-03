@@ -21,7 +21,14 @@ class Event extends Model
 
     public function registrations()
     {
-        return $this->hasMany('App\EventRegistration');
+        return $this->hasMany('App\EventRegistration')
+            ->whereNotIn('user_id', MentorProfile::all()->pluck('user_id'));
+    }
+
+    public function mentors()
+    {
+        return $this->hasMany('App\EventRegistration')
+            ->whereIn('user_id', MentorProfile::all()->pluck('user_id'));
     }
 
     public static function upcoming()
