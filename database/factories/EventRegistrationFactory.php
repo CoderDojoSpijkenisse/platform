@@ -9,6 +9,6 @@ $factory->define(App\EventRegistration::class, function (Faker $faker) {
         'event_id' => Event::all()->random(),
         'user_id' => NinjaProfile::all()->random()->user->id,
         'parent_will_pick_up' => $faker->boolean(),
-        'check_in_token' => $faker->password(30),
+        'check_in_token' => Uuid::generate(4)->string,
     ];
 });

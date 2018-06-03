@@ -26,10 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $upcomingEvents = Event::where('time_end', '>', Carbon::now())->limit(5)->with('registrations')->get();
-        $nextDojo = $upcomingEvents->pop();
         $lessons = Lesson::limit(5)->get();
 
-        return view('home', compact('nextDojo', 'upcomingEvents', 'lessons'));
+        return view('home', compact('lessons'));
     }
 }
