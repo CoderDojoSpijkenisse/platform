@@ -24,5 +24,4 @@ Route::resource('event-registrations', 'EventRegistrationController');
 Route::group(['prefix' => 'parent', 'middleware' => ['auth']], function () {
     Route::get('children', 'ChildrenController@index')->name('parent.children');
     Route::post('registrations', 'ChildrenController@updateRegistrations')->name('parent.registrations');
-
 });
