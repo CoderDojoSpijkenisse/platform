@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - 7.1
+
+before_script:
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --no-interaction --dev
+  - php artisan key:generate
+  - php artisan migrate --seed
+
+before_install:
+  - mysql -e 'CREATE DATABASE cdsp_test;'
+
+script:
+  - phpunit
+
+services:
+  - mysql
