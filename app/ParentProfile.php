@@ -23,11 +23,20 @@ class ParentProfile extends Model
 
     public function children()
     {
-        return $this->belongsToMany('App\NinjaProfile');
+        return $this->belongsToMany('App\NinjaProfile')->withPivot('relation');
     }
 
-    public function registrations()
+    public function childrenOrderedByName()
     {
-        return $this->user->registrations;
+        return $this->children()
+            ->join('users', 'users.id', '=', 'ninja_profiles.user_id')
+            ->orderBy('users.name');
+    }
+
+    public function registrationsForEvent(Event $event)
+    {
+        $children = $this->children->pluck('user.id');
+
+        return EventRegistration::where('event_id', $event->id)->whereIn('user_id', $children)->get();
     }
 }

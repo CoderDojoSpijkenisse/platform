@@ -27,7 +27,12 @@
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
-                    @yield('content')
+                    <div class="col-md-8">
+                        @yield('content')
+                    </div>
+                    <div class="col-md-4">
+                        @include('layouts.sidebar')
+                    </div>
                 </div>
             </div>
         </main>
