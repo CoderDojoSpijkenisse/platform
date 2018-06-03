@@ -57,20 +57,44 @@
                     </div>
                 </div>
             </div>
-
-            <hr/>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">QR Ticket</div>
-                        <div class="card-body">
-                            {!! QRCode::url(Illuminate\Support\Str::uuid())->svg() !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
+
+    @auth
+        @if(\Auth::user()->hasMentorProfile())
+            <hr/>
+
+            <div class="card">
+                <div class="card-header">
+                    Attendees
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($event->registrations as $registration)
+                                <tr>
+                                    <td>{{ $registration->user->name }}</td>
+                                    <td>{{ $registration->user->ninjaProfile->age }}</td>
+                                    <td>
+                                        @if($registration->checked_in_at)
+                                            <span class="badge badge-success">Checked in</span>
+                                        @else
+                                            <span class="badge badge-danger">Not checked in</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @endif
+    @endauth
 @endsection
