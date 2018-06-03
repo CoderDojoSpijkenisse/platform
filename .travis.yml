@@ -3,6 +3,17 @@ language: php
 php:
   - 7.1
 
+services:
+  - mysql
+
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+
+packages:
+  - mysql-server
+
 before_script:
   - cp .env.travis .env
   - composer self-update
@@ -15,6 +26,3 @@ before_install:
 
 script:
   - phpunit
-
-services:
-  - mysql
